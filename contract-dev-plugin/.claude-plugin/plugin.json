@@ -4,15 +4,5 @@
   "version": "2.0.0",
   "author": {
     "name": "11来了"
-  },
-  "commands": [
-    "./commands/code-review.md",
-    "./commands/trace-data-source.md",
-    "./commands/dev-help.md"
-  ],
-  "skills": [
-    "./skills/code-review",
-    "./skills/code-knowledge",
-    "./skills/test-driven-development"
-  ]
+  }
 }

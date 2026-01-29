@@ -10,7 +10,7 @@
         {
             "name": "contract-dev-plugin",
             "source": "./contract-dev-plugin",
-            "description": "签约系统开发插件"
+            "description": "签约系统的开发辅助插件"
         }
     ]
 }
