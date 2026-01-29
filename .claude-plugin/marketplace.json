@@ -1,0 +1,16 @@
+{
+    "name": "contract-marketplace",
+    "metadata": {
+        "description": "签约系统自动化开发插件"
+    },
+    "owner": {
+        "name": "HOME RD"
+    },
+    "plugins": [
+        {
+            "name": "contract-dev-plugin",
+            "source": "./contract-dev-plugin",
+            "description": "签约系统开发插件"
+        }
+    ]
+}

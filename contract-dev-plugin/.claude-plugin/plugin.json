@@ -1,0 +1,15 @@
+{
+  "name": "code-review-plugin",
+  "description": "专业的代码 CR 插件，支持自定义规范检查",
+  "version": "1.0.0",
+  "author": {
+    "name": "11来了"
+  },
+  "commands": [
+    "./commands/code-review.md"
+  ],
+  "skills": [
+    "./skills/code-review"
+  ]
+  
+}
