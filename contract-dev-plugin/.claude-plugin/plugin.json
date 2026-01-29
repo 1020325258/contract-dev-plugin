@@ -7,14 +7,10 @@
   },
   "commands": [
     "./commands/code-review.md",
-    "./commands/analyze-data.md",
-    "./commands/trace-data-source.md",
-    "./commands/analyze-calculation.md",
-    "./commands/explain-data-flow.md"
+    "./commands/trace-data-source.md"
   ],
   "skills": [
     "./skills/code-review",
-    "./skills/explaining-code",
-    "./skills/data-flow-tracing"
+    "./skills/code-knowledge"
   ]
 }
