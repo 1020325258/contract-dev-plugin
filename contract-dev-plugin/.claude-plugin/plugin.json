@@ -1,8 +1,18 @@
 {
   "name": "contract-dev-plugin",
-  "description": "签约系统代码辅助开发插件",
-  "version": "1.0.0",
+  "description": "代码开发辅助插件，包含代码审查、代码解释和数据流分析功能",
+  "version": "2.0.0",
   "author": {
     "name": "11来了"
-  }
+  },
+  "commands": [
+    "./commands/code-review.md",
+    "./commands/trace-data-source.md",
+    "./commands/dev-help.md"
+  ],
+  "skills": [
+    "./skills/code-review",
+    "./skills/code-knowledge",
+    "./skills/test-driven-development"
+  ]
 }
