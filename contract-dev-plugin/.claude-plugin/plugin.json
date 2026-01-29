@@ -1,15 +1,20 @@
 {
-  "name": "code-review-plugin",
-  "description": "专业的代码 CR 插件，支持自定义规范检查",
-  "version": "1.0.0",
+  "name": "contract-dev-plugin",
+  "description": "代码开发辅助插件，包含代码审查、代码解释和数据流分析功能",
+  "version": "2.0.0",
   "author": {
     "name": "11来了"
   },
   "commands": [
-    "./commands/code-review.md"
+    "./commands/code-review.md",
+    "./commands/analyze-data.md",
+    "./commands/trace-data-source.md",
+    "./commands/analyze-calculation.md",
+    "./commands/explain-data-flow.md"
   ],
   "skills": [
-    "./skills/code-review"
+    "./skills/code-review",
+    "./skills/explaining-code",
+    "./skills/data-flow-tracing"
   ]
-  
 }
