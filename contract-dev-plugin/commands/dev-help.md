@@ -7,4 +7,4 @@ allowed-tools: Read, Grep, Glob, Bash(git log:*), Bash(git show:*)
 阅读签约系统领域开发规范，辅助开发。
 
 ## 开发规范
-文件上传 S3：./skills/code-knowledge/file-upload-s3.md
+- 文件上传 S3 规范：./skills/code-knowledge/file-upload-s3.md
