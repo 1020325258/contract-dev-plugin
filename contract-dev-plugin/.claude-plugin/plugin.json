@@ -7,7 +7,8 @@
   },
   "commands": [
     "./commands/code-review.md",
-    "./commands/trace-data-source.md"
+    "./commands/trace-data-source.md",
+    "./commands/dev-help.md"
   ],
   "skills": [
     "./skills/code-review",

@@ -1,6 +1,5 @@
 ---
-description: 追踪指定变量或方法的来源，分析它从哪里获取、如何传递到当前位置。
-argument-hint: "[变量名或方法名称]"
+description: 基于签约系统的开发规范，辅助开发
 allowed-tools: Read, Grep, Glob, Bash(git log:*), Bash(git show:*)
 ---
 
