@@ -12,6 +12,7 @@
   ],
   "skills": [
     "./skills/code-review",
-    "./skills/code-knowledge"
+    "./skills/code-knowledge",
+    "./skills/test-driven-development"
   ]
 }
