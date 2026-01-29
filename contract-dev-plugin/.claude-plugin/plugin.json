@@ -1,6 +1,6 @@
 {
   "name": "contract-dev-plugin",
-  "description": "代码开发辅助插件，包含代码审查、代码解释和数据流分析功能",
+  "description": "签约系统代码开发辅助插件",
   "version": "2.0.0",
   "author": {
     "name": "11来了"
