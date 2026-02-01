@@ -1,8 +1,5 @@
 {
     "name": "contract-marketplace",
-    "metadata": {
-        "description": "签约系统自动化开发插件"
-    },
     "owner": {
         "name": "HOME RD"
     },

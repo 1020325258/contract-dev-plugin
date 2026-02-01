@@ -5,6 +5,11 @@
   "author": {
     "name": "11来了"
   },
+  "commands": [
+    "./commands/code-review.md",
+    "./commands/dev-help.md",
+    "./commands/trace-data-source.md"
+  ],
   "skills": [
     "./skills/code-knowledge",
     "./skills/code-review",
