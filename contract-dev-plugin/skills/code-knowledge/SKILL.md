@@ -1,5 +1,4 @@
 ---
-name: code-knowledge
 description: 签约项目业务信息文档，阅读或者开发代码之前优先阅读当前文档。
 ---
 

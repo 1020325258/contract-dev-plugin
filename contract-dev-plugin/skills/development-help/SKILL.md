@@ -1,5 +1,4 @@
 ---
-name: dev-help
 description: 基于签约系统的开发规范，辅助开发。
 ---
 

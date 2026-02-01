@@ -1,5 +1,4 @@
 ---
-name: test-driven-development
 description: 测试驱动开发规范，在开发新逻辑之前必须阅读此规范，先生成测试。
 ---
 
