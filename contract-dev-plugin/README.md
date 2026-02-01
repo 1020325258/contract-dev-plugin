@@ -91,24 +91,29 @@
 
 插件包含多个 Skills，会根据上下文自动调用：
 
+#### `code-knowledge` Skill
+签约项目业务信息文档，在阅读或开发代码之前优先阅读。包含：
+- 业务术语词汇表
+- 合同 PDF 数据构造规则
+- `ContractPdfBuildService` 内部方法的反射调用机制
+- 数据从前端到后端再到合同 PDF 的完整流转链路
+
 #### `code-review` Skill
 签约项目代码审查规范，重点检查：
 - 空指针安全（`Optional` 使用）
 - `contractReq.getPromiseInfo()` 等关键方法的 null 检查
 - 常见的空指针异常风险
 
-#### `code-knowledge` Skills
-签约系统开发知识库，包括：
+#### `development-help` Skill
+基于签约系统的开发规范，提供场景化开发指导：
+- 文件上传 S3 的标准流程和代码示例
+- 合同 PDF 变量传递规范
 
-**contract-pdf-build-service**
-- `ContractPdfBuildService` 类的知识库
-- 理解合同 PDF 字段的数据来源
-- 通过 `result.put(key, value)` 追踪数据流向
-
-**file-upload-s3**
-- 文件上传 S3 的代码规范
-- 获取临时 URL（15天过期）
-- 获取永久 URL 的方法
+#### `test-driven-development` Skill
+测试驱动开发规范（TDD），强调：
+- Red → Green → Refactor 流程
+- 新逻辑必须先写测试，回归测试优先
+- 分层测试策略和 Mock 使用约束
 
 ## 安装使用
 
@@ -189,8 +194,10 @@
     "./commands/dev-help.md"
   ],
   "skills": [
-    "./skills/code-review",
-    "./skills/code-knowledge"
+    "./skills/code-knowledge/SKILL.md",
+    "./skills/code-review/SKILL.md",
+    "./skills/development-help/SKILL.md",
+    "./skills/test-driven-development/SKILL.md"
   ]
 }
 ```
@@ -206,11 +213,17 @@ contract-dev-plugin/
 │   ├── trace-data-source.md                 # 追踪数据来源命令
 │   └── dev-help.md                          # 开发规范指导命令
 ├── skills/
+│   ├── code-knowledge/                      # 签约项目业务信息文档
+│   │   ├── SKILL.md                         # 知识库入口
+│   │   └── references/
+│   │       └── contract-pdf-build-service.md
 │   ├── code-review/                         # 代码审查规范
 │   │   └── SKILL.md
-│   └── code-knowledge/                      # 开发知识库
-│       ├── contract-pdf-build-service.md    # 合同 PDF 构建服务知识
-│       └── file-upload-s3.md                # S3 文件上传规范
+│   ├── development-help/                    # 开发规范指导
+│   │   ├── SKILL.md
+│   │   └── file-upload-s3.md
+│   └── test-driven-development/             # 测试驱动开发规范
+│       └── SKILL.md
 ├── agents/
 │   └── data-flow-tracer.md                  # 数据流追踪助手 agent
 └── README.md                                # 本文档
