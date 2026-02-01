@@ -11,9 +11,9 @@
     "./commands/trace-data-source.md"
   ],
   "skills": [
-    "./skills/code-knowledge",
-    "./skills/code-review",
-    "./skills/development-help",
-    "./skills/test-driven-development"
+    "./skills/code-knowledge/SKILL.md",
+    "./skills/code-review/SKILL.md",
+    "./skills/development-help/SKILL.md",
+    "./skills/test-driven-development/SKILL.md"
   ]
 }
