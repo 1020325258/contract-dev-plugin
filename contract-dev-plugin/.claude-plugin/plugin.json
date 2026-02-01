@@ -4,5 +4,11 @@
   "version": "2.0.0",
   "author": {
     "name": "11来了"
-  }
+  },
+  "skills": [
+    "./skills/code-knowledge",
+    "./skills/code-review",
+    "./skills/development-help",
+    "./skills/test-driven-development"
+  ]
 }
