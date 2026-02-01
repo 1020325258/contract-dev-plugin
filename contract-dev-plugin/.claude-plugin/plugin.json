@@ -1,7 +1,7 @@
 {
   "name": "contract-dev-plugin",
   "description": "签约系统代码开发辅助插件",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "author": {
     "name": "11来了"
   },
@@ -11,9 +11,9 @@
     "./commands/trace-data-source.md"
   ],
   "skills": [
-    "../skills/code-knowledge",
-    "../skills/code-review",
+    "./skills/code-knowledge",
+    "./skills/code-review",
     "./skills/development-help",
-    "../skills/test-driven-development"
+    "./skills/test-driven-development"
   ]
 }
