@@ -13,10 +13,20 @@ description: 记录签约领域内部涉及的销售合同、报价单、报价�
 **1. 监听报价领域的基础报价单拆分事件**
 事件类型：`BUDGET_BILL_SPLIT`（来自 utopia-athena）。
 参数说明：
-- `originalBillCode`：原基础报价单编号
-- `billCodeList`：拆分后的协同报价单编号列表
-- `projectOrderId`：项目订单号
+- `originalBillCode`：原基础报价单编号。
+- `billCodeList`：拆分后的协同报价单编号列表。
+- `projectOrderId`：项目订单号。
 监听器：`BudgetBillSplitHandler`。
+
+**2. 获取个性化报价数据**
+方法：`homeOrderDataConversionService.contractPersonalData(projectOrderId, billCodeList, null)`。
+
+**3. 绑定合同与报价单的关系**
+方法：`QuotationRelationCommonService#bindBillCodeRelationAfter`
+职责：将合同与拆分后的协同报价单进行绑定。
+
+**4. 解绑合同与基础报价单的关系**
+方法：`QuotationRelationCommonService#cancelRelationByBillCodeAndContractCode`
 
 
 
