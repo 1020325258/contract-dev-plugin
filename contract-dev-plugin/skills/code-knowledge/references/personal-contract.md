@@ -11,26 +11,32 @@ description: 记录签约领域内部涉及的销售合同、报价单、报价�
 正式套餐合同签署完成后。
 
 ### 核心流程说明
-处理类：`BudgetBillSplitHandlerV3#dealBudgetBillSplit`
+处理类：`BudgetBillSplitHandlerV2#dealBudgetBillSplit`
 
 **1. 获取正签合同**
 通过 `projectOrderId` 获取最新的正式套餐合同（`ContractTypeEnum.PACKAGE_FORMAL`）。
 
-**2. 获取关联的个性化合同**
-通过正签合同获取与其合并发起的销售合同（个性化合同），筛选条件：
+**2. 获取正签合同关联发起的销售合同**
+方法：`getRelatedPersonalContracts(formalContract)`
+通过正签合同的合同编号获取关联关系（`contractRelationService.getRelationList`），再查询关联的销售合同，筛选条件：
 - 合同类型为 `ContractTypeEnum.PERSONAL`
-- 合同状态在 `ContractStatusEnum.validStatusWithoutDraft` 范围内
+- 合同状态在 `ContractStatusEnum.validStatusWithoutDraft` 范围内（不包括草稿状态的有效状态）
 
-**3. 按主体分组**
-将个性化合同按 `companyCode`（主体）分组，便于后续匹配。
+**3. 按公司主体对销售合同分组**
+将销售合同按 `companyCode`（公司主体）转换为 Map，key 为公司主体，value 为合同对象，便于后续按主体匹配。
+变量名：`relatedPersonalContractByCompanyCode`
 
-**4. 获取个性化报价数据**
+**4. 通过报价单号获取个性化报价数据**
 方法：`homeOrderDataConversionService.contractPersonalData(projectOrderId, billCodeList, null)`
-返回拆分后的协同报价单数据，包含报价单号和所属公司主体。
+返回拆分后的协同报价单数据（`ContractSourceDataBO`），包含报价单号和所属公司主体（`organizationCode`）。
 
-**5. 按公司主体匹配合同与报价单**
-遍历个性化报价数据，按 `organizationCode`（公司主体）匹配对应的个性化合同：
-- **绑定关系**：调用 `quotationRelationCommonService.bindBillCodeRelationAfter(contract, billCodes)` 将拆分后的协同报价单与合同绑定
+**5. 个性化报价数据按照公司主体分组**
+将个性化报价数据按 `organizationCode`（公司主体）分组，便于后续按主体进行报价单的换绑操作。
+变量名：`personalContractDataByCompanyCode`
+
+**6. 按照主体分组，进行报价单的解绑与绑定**
+遍历个性化报价数据分组，按 `organizationCode`（公司主体）匹配对应的销售合同：
+- **绑定关系**：调用 `quotationRelationCommonService.bindBillCodeRelationAfter(personalContract, billCodes)` 将拆分后的协同报价单与合同绑定
 - **解绑关系**：调用 `quotationRelationCommonService.cancelRelationByBillCodeAndContractCode(contractCode, originalBillCode)` 解除原基础报价单与合同的关系
 
 ## 个性化报价单撤回处理
