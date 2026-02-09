@@ -6,13 +6,14 @@ description: 测试驱动开发规范，在开发新逻辑之前必须阅读此�
 
 > [!CAUTION]
 > **任何代码变更必须遵循 Red → Green → Refactor，并且提交中必须包含对应测试。**
-
+> **测试代码位置：**utopia-nrs-sales-project-start/src/test/java/com/ke/utopia/nrs/salesproject
 ### 流程（必须按顺序）
 
 1. **Red：先写测试**
 
    * 新增能力/修复 Bug 前，先补充或新增测试用例
    * 测试应能稳定复现问题（修 Bug 时必须先写“回归测试”）
+   
 2. **Green：最小实现通过测试**
 
    * 只写让测试通过的最小改动，避免顺手重构/扩功能
