@@ -7,7 +7,7 @@ allowed-tools: Read, Grep, Glob, Bash(git log:*), Bash(git show:*)
 ## 任务目标
 
 追踪指定数据的来源，回答"这个数据从哪里来？"
-**[强制]** 务必阅读 ./skills/code-knowledge，根据该技能来回答数据的来源。
+**[强制]** 务必阅读 ./skills/read，根据该技能来回答数据的来源。
 
 ## 输入信息
 

@@ -1,18 +1,17 @@
 {
   "name": "contract-dev-plugin",
   "description": "签约系统代码开发辅助插件",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "author": {
     "name": "11来了"
   },
   "commands": [
     "./commands/code-review.md",
-    "./commands/code-god.md",
     "./commands/trace-data-source.md",
     "./commands/create-code-knowledge-skill.md"
   ],
   "skills": [
-    "./skills/code-knowledge",
+    "./skills/code-reader",
     "./skills/code-review",
     "./skills/development-help",
     "./skills/test-driven-development"
