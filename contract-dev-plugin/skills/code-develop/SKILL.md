@@ -24,6 +24,10 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 **场景**: 需要将业务数据传递到合同 PDF 生成服务
 **规范文档**: [./references/contract-pdf-build-service.md](./references/contract-pdf-build-service.md)
 
+### 3. RPC 调用规范
+**场景**: 跨服务 RPC 调用(报价领域、主订单领域等)
+**规范文档**: [./references/rpc-development.md](./references/rpc-development.md)
+
 ---
 
 ## 开发工作流
@@ -60,6 +64,7 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 ### 技术规范
 - PDF 数据构造: `./references/contract-pdf-build-service.md`
 - S3 文件上传: `./references/file-upload-s3.md`
+- RPC 调用规范: `./references/rpc-development.md`
 
 ### 质量保证
 - TDD 规范: `../test-driven-development/SKILL.md`
