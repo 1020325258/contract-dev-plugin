@@ -1,7 +1,7 @@
 {
   "name": "contract-dev-plugin",
   "description": "签约系统代码开发辅助插件",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "author": {
     "name": "11来了"
   },
@@ -13,7 +13,7 @@
   "skills": [
     "./skills/code-reader",
     "./skills/code-review",
-    "./skills/development-help",
+    "./skills/code-develop",
     "./skills/test-driven-development"
   ]
 }

@@ -14,7 +14,5 @@ description: 包含了签约领域内的知识文档，帮助开发者理解签�
 ## 相关文档
 - 签约领域基础知识：`./references/base-domain-knowledge.md`
 - 销售合同/报价相关规则：`./references/personal-contract.md`
-- 合同 PDF 数据构造规则：`./references/contract-pdf-build-service.md`
-- 文件上传 S3 规范：`./references/file-upload-s3.md`
 - 通用文档：
     - mvm test 无法正确执行解决文档：`./references/maven-test-troubleshooting.md`
