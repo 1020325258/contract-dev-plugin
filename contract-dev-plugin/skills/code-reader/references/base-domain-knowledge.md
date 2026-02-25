@@ -66,14 +66,6 @@ description: 签约领域基础业务知识，进行任何动作之前，必须�
 - `thirdSignedKey`：三方签署后文件 key（存管协议等）
 - `errorMessage`：合同发起失败信息
 
-**常用 Service 方法**（`ContractService`）：
-- `getByContractCode(String contractCode)`：根据合同编号获取合同
-- `getContractInfo(String projectOrderId, Byte contractType)`：获取项目单下指定类型的合同
-- `getContractList(String projectOrderId, Byte contractType)`：获取项目单下指定类型的所有合同
-- `getLatestContract(String projectOrderId, Byte contractType)`：获取项目单下指定类型的最新合同
-- `updateContractStatus(String contractCode, Integer updateStatus)`：更新合同状态
-- `deleteSoftByContractCode(String contractCode)`：软删除合同
-
 ### ContractNode（合同节点表）
 **模型位置**：`utopia-nrs-sales-project-dao/src/main/java/com/ke/utopia/nrs/salesproject/dao/model/contract/ContractNode.java`
 
@@ -103,12 +95,4 @@ description: 签约领域基础业务知识，进行任何动作之前，必须�
 - **时间差计算场景**：经常有导数需求需要计算同一合同不同节点之间的时间差（如：用户确认到签署完成的耗时），可以通过查询对应节点的 `fireTime` 进行计算。例如：
   - 合同发起到用户签署的时长：`nodeType=7的fireTime - nodeType=2的fireTime`
   - 审核通过到盖章完成的时长：`nodeType=8的fireTime - nodeType=4的fireTime`
-
-**常用 Service 方法**（`ContractNodeService`）：
-- `getListByContractCode(String contractCode)`：获取合同的所有节点
-- `getListByContractCodesAndType(List<String> contractCodes, List<Byte> nodeTypeList)`：批量获取指定类型的节点
-- `create(String contractCode, Byte nodeType)`：创建节点（使用当前时间）
-- `updateOrCreate(String contractCode, Byte nodeType)`：更新或创建节点（幂等操作）
-- `getByContractCodeAndType(String contractCode, Byte nodeType)`：获取合同的指定类型节点
-- `softDeleteByContractCode(String contractCode)`：软删除合同的所有节点
 
