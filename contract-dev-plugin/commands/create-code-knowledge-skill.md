@@ -1,6 +1,7 @@
 ---
 description: 按照规范进行创建，辅助创建签约领域知识的 skill 文档。
 argument-hint: "[指定要写入的 skill 文档] [指定要写入的内容]"
+allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 ## 职责
