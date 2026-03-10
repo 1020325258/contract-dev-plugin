@@ -12,6 +12,13 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 - 遵循 TDD 开发规范: `../test-driven-development/SKILL.md`
 - 代码审查标准: `../code-review/SKILL.md`
 
+## 禁止耗时操作
+- **严禁**在编写代码过程中进行耗时操作，包括但不限于：搜索本地 Maven 仓库（`~/.m2`）、下载依赖、反编译 JAR 包。
+- 如需了解某个类或方法的签名，**只允许**在项目源码目录内搜索，或直接向用户提问，不得转而查找 Maven 缓存。
+
+## 遇到不确定的情况立即提问
+- 开发过程中遇到任何不清楚的地方（业务逻辑、字段含义、调用方式等），**必须立即询问用户**，严禁自行猜测或推断后直接编写代码。
+
 ---
 
 ## 基础组件使用规范
@@ -56,6 +63,16 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 1. 单元测试覆盖核心逻辑
 2. 集成测试验证完整流程
 3. 边界条件和异常场景测试
+
+---
+
+## 领域开发经验
+
+### 报价单/变更单下单后绑定 S 单
+**规范文档**: [./references/bill-to-suborder.md](./references/bill-to-suborder.md)
+
+### 协同报价单撤回 - S 单撤回合同
+**规范文档**: [./references/suborder-contract-revocation.md](./references/suborder-contract-revocation.md)
 
 ---
 
