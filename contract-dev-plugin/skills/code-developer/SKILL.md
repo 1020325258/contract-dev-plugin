@@ -74,6 +74,9 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 ### 协同报价单撤回 - S 单撤回合同
 **规范文档**: [./references/suborder-contract-revocation.md](./references/suborder-contract-revocation.md)
 
+### 变更单取消时的合同处理
+**规范文档**: [./references/change-order-cancel.md](./references/change-order-cancel.md)
+
 ---
 
 ## 参考文档索引
