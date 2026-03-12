@@ -23,5 +23,5 @@ Kafka payload 中，变更单号字段为 `projectChangeNo`（非 `changeOrderNo
 
 **3. 换绑行为差异**
 - 协同/团装报价单：解绑报价单，绑定 S 单（`convertCooperBillToSubOrder`）
-- 正签基础报价单：仅绑定 S 单，保留基础报价单关联（`convertBasicBillToSubOrder`）
+- 正签基础报价单：仅绑定 S 单，保留基础报价单关联（`convertStandardBillToSubOrder`）
 - 变更单：仅绑定 S 单，保留变更单关联（`convertChangeToSubOrder`）
