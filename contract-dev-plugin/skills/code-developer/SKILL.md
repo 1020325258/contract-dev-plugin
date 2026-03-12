@@ -77,6 +77,20 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 ### 变更单取消时的合同处理
 **规范文档**: [./references/change-order-cancel.md](./references/change-order-cancel.md)
 
+### 获取主单号（projectOrderId）的正确方式
+
+## 获取主单号的正确方式
+### 业务背景
+签约系统中存在两种获取 `projectOrderId` 的途径，但含义不同：
+- `baseContractReq.getContractBaseInfo().getProjectOrderId()`：来自请求入参，是真正的**主单号**，用于调用主订单服务查询数据。
+- `ContractContextHandler.getProjectInfo().getProjectOrderId()`：来自上下文，**可能不是主单号**（在某些场景下返回的是其他订单标识），直接用于主订单查询会导致报错。
+
+### 触发时机
+需要调用主订单服务（如查询 S 单、变更单等）时，需要传入 `projectOrderId` 参数的场景。
+
+### 核心流程
+**强制使用 `baseContractReq.getContractBaseInfo().getProjectOrderId()`** 获取主单号，禁止使用 `ContractContextHandler.getProjectInfo().getProjectOrderId()` 作为主订单查询的入参。
+
 ---
 
 ## 参考文档索引
