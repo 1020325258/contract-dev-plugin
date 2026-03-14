@@ -8,9 +8,26 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 在签约系统进行开发时,必须优先查阅本指南。
 
 ## 前置要求
-- 开发前阅读 `../code-reader/references/base-domain-knowledge.md` 了解业务基础
+- 开发前阅读 `./references/base-domain-knowledge.md` 了解业务基础
 - 遵循 TDD 开发规范: `../test-driven-development/SKILL.md`
 - 代码审查标准: `../code-review/SKILL.md`
+
+## 代码阅读规范
+- 涉及枚举类时**必须**到枚举类定义中查看确切含义，不能仅凭枚举常量名称推测业务含义。
+- 确保所有描述准确，特别是业务术语，务必基于 `./references/base-domain-knowledge.md` 中的领域概念。
+
+## ⚠️ 插件文件修改必须写入源码目录
+
+本插件存在**两个路径**，修改时必须操作**源码目录**：
+
+| 路径 | 说明 |
+|---|---|
+| ✅ `/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/` | **源码目录**，所有修改必须写这里 |
+| ❌ `~/.claude/plugins/marketplaces/contract-marketplace/contract-dev-plugin/` | 缓存目录，Claude Code 安装时自动同步，**禁止直接修改** |
+
+**任何对插件 commands/skills/plugin.json 的修改，必须写入源码目录。**
+
+---
 
 ## 禁止耗时操作
 - **严禁**在编写代码过程中进行耗时操作，包括但不限于：搜索本地 Maven 仓库（`~/.m2`）、下载依赖、反编译 JAR 包。
@@ -68,6 +85,10 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 
 ## 领域开发经验
 
+### 数据库表结构参考
+**场景**: 开发时需要查阅合同领域表结构、字段含义、分表规则
+**规范文档**: [./references/contract-database-tables.md](./references/contract-database-tables.md)
+
 ### 报价单/变更单下单后绑定 S 单
 **规范文档**: [./references/bill-to-suborder.md](./references/bill-to-suborder.md)
 
@@ -96,14 +117,16 @@ description: 签约领域代码开发指南,包含领域特定的组件使用规
 ## 参考文档索引
 
 ### 业务知识
-- 基础业务概念: `../code-reader/references/base-domain-knowledge.md`
-- 销售合同流程: `../code-reader/references/personal-contract.md`
+- 基础业务概念: `./references/base-domain-knowledge.md`
+- 销售合同流程: `./references/personal-contract.md`
+- Maven 测试问题排查: `./references/maven-test-troubleshooting.md`
 
 ### 技术规范
 - PDF 数据构造: `./references/contract-pdf-build-service.md`
 - S3 文件上传: `./references/file-upload-s3.md`
 - RPC 调用规范: `./references/rpc-development.md`
 - 定时任务开发: `./references/scheduled-task-development.md`
+- 数据库表结构: `./references/contract-database-tables.md`
 
 ### 质量保证
 - TDD 规范: `../test-driven-development/SKILL.md`

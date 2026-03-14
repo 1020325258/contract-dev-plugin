@@ -1,15 +1,17 @@
 ---
 description: 自动对当前分支修改的代码进行 CR 检查，使用 code-review Skill。
-allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git branch:*), Read, Grep, Glob
+allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git branch:*), Bash(git merge-base:*), Bash(git log:*), Read, Grep, Glob
 ---
 
 ## 当前分支信息
 - 当前分支：!`git branch --show-current`
-- 状态：!`git status --porcelain`
-- diff（当前修改和 HEAD 的差异）：!`git diff HEAD`
+- 未提交改动（工作区 vs HEAD）：!`git status --porcelain`
+- 与 master 分叉点：!`git merge-base master HEAD`
+- 分支全量 diff（分叉点至 HEAD，已提交部分）：!`git diff $(git merge-base master HEAD) HEAD`
+- 未提交改动 diff（工作区未 commit 部分）：!`git diff HEAD`
 
 ## 任务
-目标：使用我的 **code-review** Skill 自动审查以上 diff 中的改动。
+目标：使用我的 **code-review** Skill 审查以上**两段 diff 的合并内容**（分支全量改动 + 未提交改动）。
 
 输出格式：
 1. 风险改动的简短摘要
