@@ -1,0 +1,35 @@
+{
+  "sources": [
+    {
+      "type": "blog",
+      "name": "Jesse Vincent",
+      "url": "https://blog.fsck.com/"
+    },
+    {
+      "type": "blog",
+      "name": "Anthropic Engineering",
+      "url": "https://www.anthropic.com/engineering"
+    },
+    {
+      "type": "bilibili",
+      "name": "B站UP主1",
+      "space_id": "316183842"
+    },
+    {
+      "type": "bilibili",
+      "name": "B站UP主2",
+      "space_id": "1815948385"
+    },
+    {
+      "type": "youtube",
+      "name": "DLCorner",
+      "channel": "@dlcorner"
+    },
+    {
+      "type": "youtube",
+      "name": "YC-more",
+      "channel": "@YC-more"
+    }
+  ],
+  "output_dir": "~/content-updates"
+}
