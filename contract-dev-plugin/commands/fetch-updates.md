@@ -1,11 +1,17 @@
 ---
 description: 获取博客和视频网站的最新内容，保存为本地 Markdown 文件
-allowed-tools: Read, Write, WebFetch, Bash(mkdir:*), Bash(ls:*)
+allowed-tools: Read, Write, WebFetch, Bash(mkdir:*), Bash(ls:*), Bash(curl:*)
 ---
 
 ## 配置文件
 
 读取配置：`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/content-sources.json`
+
+## ⚠️ 注意事项
+
+本命令需要网络访问权限。如果遇到权限限制：
+1. 确保当前会话允许 `curl` 命令
+2. 或在允许 WebFetch 访问外部网站的环境中使用
 
 ## 任务
 
