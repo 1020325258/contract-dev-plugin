@@ -1,6 +1,6 @@
 ---
 description: 获取博客和视频网站的最新内容，保存为本地 Markdown 文件
-allowed-tools: Read, Write, WebFetch, Bash(mkdir:*), Bash(ls:*), Bash(curl:*)
+allowed-tools: Read, Write, WebFetch, Bash
 ---
 
 ## 配置文件
