@@ -1,21 +1,15 @@
 ---
 description: 获取博客和视频网站的最新内容，保存为本地 Markdown 文件
-allowed-tools: Read, Write, WebFetch, Bash
+allowed-tools: Read, Write, Bash(mkdir:*), mcp__plugin_contract-dev-plugin_content-fetcher__*
 ---
 
 ## 配置文件
 
 读取配置：`${CLAUDE_PLUGIN_ROOT}/.claude-plugin/content-sources.json`
 
-## ⚠️ 注意事项
-
-本命令需要网络访问权限。如果遇到权限限制：
-1. 确保当前会话允许 `curl` 命令
-2. 或在允许 WebFetch 访问外部网站的环境中使用
-
 ## 任务
 
-使用 **content-fetcher** Skill 完成以下步骤：
+使用 MCP Server 提供的工具抓取各数据源最新内容。
 
 ### 1. 读取配置
 
@@ -27,27 +21,42 @@ allowed-tools: Read, Write, WebFetch, Bash
 
 ### 3. 抓取各数据源最新内容
 
-对于每个数据源：
+使用 MCP 工具抓取：
 
 **博客类：**
-- 使用 WebFetch 访问网站
-- 提取最新 3-5 篇文章的标题、链接、发布时间
-- 为每篇文章生成简短摘要
+- `mcp__plugin_contract-dev-plugin_content-fetcher__fetch_anthropic_blog`
+- `mcp__plugin_contract-dev-plugin_content-fetcher__fetch_jesse_blog`
 
 **B站：**
-- 使用 WebFetch 访问 `https://space.bilibili.com/{space_id}`
-- 提取最新 3-5 个视频的标题、链接、发布时间
+- `mcp__plugin_contract-dev-plugin_content-fetcher__fetch_bilibili_videos`
 
 **YouTube：**
-- 使用 WebFetch 访问 `https://www.youtube.com/{channel}`
-- 提取最新 3-5 个视频的标题、链接、发布时间
+- `mcp__plugin_contract-dev-plugin_content-fetcher__fetch_youtube_videos`
 
 ### 4. 整理并保存
 
 将所有内容按类型分组，保存为 Markdown 文件：
 
 - 文件路径：`~/content-updates/YYYY-MM-DD.md`
-- 格式：参见 content-fetcher Skill 中的输出格式
+- 格式如下：
+
+```markdown
+# 内容更新 - YYYY-MM-DD
+
+## 📝 博客文章
+
+### [{source_name}] {title}
+- 发布时间：{publish_date}
+- 链接：{url}
+- 摘要：{summary}
+
+## 🎬 视频内容
+
+### [{platform} - {creator}] {title}
+- 发布时间：{publish_date}
+- 链接：{url}
+- 摘要：{summary}
+```
 
 ### 5. 输出摘要
 

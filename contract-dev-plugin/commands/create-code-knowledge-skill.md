@@ -1,16 +1,35 @@
 ---
-description: 按照规范进行创建，辅助创建签约领域知识的 skill 文档。
+description: 将开发经验持久化为 skill 文档，根据知识类型自动选择目标目录。
 argument-hint: "[指定要写入的内容]"
 allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 ## 职责
-按照规范，将用户提供的签约领域开发经验写入 `/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/skills/code-developer` 目录下的开发技能文档。
+按照规范，将用户提供的开发经验写入对应 skill 目录，并同步更新版本号。
+
+## 插件源码目录
+`/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/`
 
 ## 执行流程
 
-**1. 在 references 中检索是否已有类似经验**
-- 扫描 `skills/code-developer/references/` 目录下所有 `.md` 文件
+**0. 判断知识类型，选择目标 skill**
+根据内容关键词，自动匹配目标 skill 目录：
+
+| 知识类型 | 关键词示例 | 目标 skill |
+|---------|-----------|-----------|
+| 签约业务知识 | 报价单、合同、S单、变更单、签约、billCode | `skills/code-developer` |
+| Spring AI Alibaba | Agent、Graph、StateGraph、编排、checkpoint | `skills/spring-ai-alibaba-developer` |
+| TDD/测试规范 | 单元测试、Mock、集成测试、测试驱动 | `skills/test-driven-development` |
+| 项目结构 | DDD、包结构、分层、模块划分 | `skills/project-structure` |
+| 代码审查 | 空指针、Optional、代码规范、CR | `skills/code-review` |
+
+**判断规则**：
+1. 优先匹配关键词，命中则写入对应 skill
+2. 多个关键词命中时，选择匹配度最高的
+3. 无匹配时默认写入 `skills/code-developer`
+
+**1. 在目标 skill 的 references 中检索是否已有类似经验**
+- 扫描目标 skill 的 `references/` 目录下所有 `.md` 文件
 - 逐一判断各文件主题是否与本次经验相关
 - **命中**（已有相关内容）→ 进入步骤 2
 - **未命中**（无相关内容）→ 进入步骤 3
@@ -21,13 +40,13 @@ allowed-tools: Read, Write, Edit, Grep, Glob
 - 完成后跳至步骤 4
 
 **3. 无相关内容：判断写入位置**
-- **可归入某个现有 references 文件的主题**（如属于 RPC 调用、定时任务等）→ 追加到该文件末尾
-- **属于全新主题**（现有文件均不适合）→ 在 `references/` 下新建一个语义明确的 `.md` 文件，并在 `SKILL.md` 的"领域开发经验"部分添加对应入口
+- **可归入某个现有 references 文件的主题** → 追加到该文件末尾
+- **属于全新主题**（现有文件均不适合）→ 在 `references/` 下新建一个语义明确的 `.md` 文件，并在 `SKILL.md` 添加对应入口
 - 完成后进入步骤 4
 
 **4. 同步更新 plugin.json 版本**
-- 路径：`/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/.claude-plugin/plugin.json`
-- 对 `version` 字段做 patch 版本升级（如 `1.4.1` → `1.4.2`）
+- 路径：`.claude-plugin/plugin.json`
+- 对 `version` 字段做 patch 版本升级（如 `1.5.0` → `1.5.1`）
 
 ---
 

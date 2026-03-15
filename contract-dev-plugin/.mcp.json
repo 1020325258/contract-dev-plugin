@@ -1,0 +1,9 @@
+{
+  "content-fetcher": {
+    "command": "python3",
+    "args": ["${CLAUDE_PLUGIN_ROOT}/mcp-server/main.py"],
+    "env": {
+      "PYTHONUNBUFFERED": "1"
+    }
+  }
+}
