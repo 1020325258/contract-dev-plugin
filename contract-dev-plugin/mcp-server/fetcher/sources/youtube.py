@@ -28,52 +28,61 @@ async def fetch_youtube_videos(browser: BrowserManager, channel: str, limit: int
         url = f"https://www.youtube.com/@{channel}/videos"
 
     async def scrape(page):
-        await page.goto(url, wait_until="networkidle", timeout=30000)
+        await page.goto(url, wait_until="domcontentloaded", timeout=30000)
 
-        # 等待视频列表加载
-        await page.wait_for_selector("a[href*='/watch?v='], ytd-rich-item-renderer", timeout=15000)
+        # 等待页面加载
+        await page.wait_for_timeout(3000)
 
-        # 提取视频信息
+        # 提取视频信息 - 使用更可靠的选择器
         videos = await page.eval_on_selector_all(
-            "ytd-rich-item-renderer, ytd-grid-video-renderer",
+            "ytd-rich-item-renderer, ytd-grid-video-renderer, ytd-video-renderer",
             """elements => {
-                const seen = new Set();
-                return elements.map(el => {
-                    const titleEl = el.querySelector('#video-title, a[title]');
-                    const linkEl = el.querySelector('a[href*="/watch"]');
-                    const metaEl = el.querySelector('ytd-video-meta-block, .metadata');
+                const results = [];
 
-                    const title = titleEl?.getAttribute('title') || titleEl?.textContent?.trim() || '';
-                    const url = linkEl?.href || '';
+                for (const el of elements) {
+                    // 获取视频链接
+                    const linkEl = el.querySelector('a[href*="/watch?v="]');
+                    if (!linkEl) continue;
 
-                    // 提取发布时间
-                    let date = '';
-                    const metaText = metaEl?.textContent || '';
-                    const viewsMatch = metaText.match(/(\\d+\\.?\\d*[KMB]?\\s*views|\\d+\\.?\\d*[KMB]?\\s*次观看)/i);
-                    const timeMatch = metaText.match(/(\\d+\\s*(hour|day|week|month|year)s?\\s*ago|\\d+\\s*(小时|天|周|月|年)前)/i);
+                    const href = linkEl.href;
+                    if (!href) continue;
 
-                    if (timeMatch) {
-                        date = timeMatch[0];
+                    // 获取标题 - 优先从 title 属性获取
+                    const titleEl = el.querySelector('#video-title, a#video-title, [title]');
+                    let title = '';
+                    if (titleEl) {
+                        title = titleEl.getAttribute('title') ||
+                                titleEl.textContent?.trim() || '';
                     }
 
-                    // 过滤重复
-                    if (seen.has(url) || !title || !url) {
-                        return null;
-                    }
-                    seen.add(url);
+                    // 清理标题
+                    title = title.replace(/\\s+/g, ' ').trim().substring(0, 100);
 
-                    return { title, url, date };
-                }).filter(item => item);
+                    // 过滤无效标题（如纯时长）
+                    if (!title || /^\\d+:\\d+$/.test(title) || title.length < 2) {
+                        continue;
+                    }
+
+                    results.push({
+                        title: title,
+                        url: href,
+                        date: ''
+                    });
+
+                    if (results.length >= 10) break;
+                }
+
+                return results;
             }"""
         )
 
         result = []
         for video in videos[:limit]:
             result.append({
-                "title": video['title'],
+                "title": video['title'] or "Unknown",
                 "url": video['url'],
                 "published_at": video['date'],
-                "summary": f"YouTube视频：{video['title']}"
+                "summary": f"YouTube视频：{(video['title'] or 'Unknown')[:50]}"
             })
 
         return result

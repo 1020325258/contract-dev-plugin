@@ -18,9 +18,9 @@ from fetcher.browser import BrowserManager
 from fetcher.sources import (
     fetch_anthropic_blog,
     fetch_jesse_blog,
-    fetch_bilibili_videos,
-    fetch_youtube_videos,
 )
+from fetcher.sources.youtube_browser import fetch_youtube_videos_browser
+from fetcher.sources.bilibili_browser import fetch_bilibili_videos_browser
 
 # 创建 MCP Server 实例
 server = Server("content-fetcher")
@@ -146,10 +146,10 @@ async def call_tool(name: str, arguments: dict[str, Any]) -> list[TextContent]:
             result = await fetch_jesse_blog(browser_manager, limit)
         elif name == "fetch_bilibili_videos":
             mid = arguments["mid"]
-            result = await fetch_bilibili_videos(browser_manager, mid, limit)
+            result = await fetch_bilibili_videos_browser(browser_manager, mid, limit)
         elif name == "fetch_youtube_videos":
             channel = arguments["channel"]
-            result = await fetch_youtube_videos(browser_manager, channel, limit)
+            result = await fetch_youtube_videos_browser(browser_manager, channel, limit)
         elif name == "fetch_all_content":
             sources = arguments["sources"]
             result = await fetch_all_sources(browser_manager, sources)
@@ -186,14 +186,14 @@ async def fetch_all_sources(browser: BrowserManager, sources: list[dict]) -> dic
             elif source_type == "bilibili":
                 mid = source.get("space_id")
                 if mid:
-                    videos = await fetch_bilibili_videos(browser, mid, 5)
+                    videos = await fetch_bilibili_videos_browser(browser, mid, 5)
                     for v in videos:
                         v["source"] = source_name
                     results["videos"].extend(videos)
             elif source_type == "youtube":
                 channel = source.get("channel")
                 if channel:
-                    videos = await fetch_youtube_videos(browser, channel, 5)
+                    videos = await fetch_youtube_videos_browser(browser, channel, 5)
                     for v in videos:
                         v["source"] = source_name
                     results["videos"].extend(videos)
