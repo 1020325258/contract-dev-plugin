@@ -4,6 +4,12 @@ description: 签约项目代码审查规范。当审查包含 contractReq.getPro
 
 # 签约项目代码审查规范
 
+## 参考文档
+
+### 工作流规范
+- [集成测试编写规范](./references/workflow/integration-test-principles.md) - 两层验证规范、宽松验证策略、冗余测试识别，审查测试代码时必读
+- [OpenSpec 文档与代码一致性审查](./references/workflow/openspec-doc-review.md) - **每次 CR 必须执行**，agent team 并行检查文档与代码一致性、过时内容、规范性
+
 ## 核心检查项
 
 
