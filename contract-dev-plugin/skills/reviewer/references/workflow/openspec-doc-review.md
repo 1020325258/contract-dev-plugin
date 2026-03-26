@@ -2,7 +2,7 @@
 
 ## 概述
 
-每次 `/code-review` 都会通过 agent team 执行此审查。
+每次 `/reviewer` 都会通过 agent team 执行此审查。
 agent-1 读代码、agent-2 读文档，主线程对比输出报告。
 
 ---

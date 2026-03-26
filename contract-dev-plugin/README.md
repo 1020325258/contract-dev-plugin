@@ -4,7 +4,7 @@
 
 ## 功能特性
 
-### 1. `/code-review` 命令 - 专业代码审查
+### 1. `/reviewer` 命令 - 专业代码审查
 
 对指定的代码文件或代码片段进行全面的 Code Review，特别针对签约项目的代码规范进行审查。
 
@@ -26,13 +26,13 @@
 **用法**：
 ```bash
 # 审查指定文件
-/code-review src/service/ContractService.java
+/reviewer src/service/ContractService.java
 
 # 审查多个文件
-/code-review src/service/*.java
+/reviewer src/service/*.java
 
 # 审查代码片段（在对话中粘贴代码后）
-/code-review
+/reviewer
 ```
 
 ### 2. `/trace-data-source` 命令 - 追踪数据来源
@@ -98,7 +98,7 @@
 - `ContractPdfBuildService` 内部方法的反射调用机制
 - 数据从前端到后端再到合同 PDF 的完整流转链路
 
-#### `code-review` Skill
+#### `reviewer` Skill
 签约项目代码审查规范，重点检查：
 - 空指针安全（`Optional` 使用）
 - `contractReq.getPromiseInfo()` 等关键方法的 null 检查
@@ -129,7 +129,7 @@
 
 ```bash
 # 使用命令审查代码
-/code-review src/service/ContractService.java
+/reviewer src/service/ContractService.java
 
 # 或者在对话中直接询问
 请帮我审查这个类的代码
@@ -189,13 +189,13 @@
     "name": "11来了"
   },
   "commands": [
-    "./commands/code-review.md",
+    "./commands/reviewer.md",
     "./commands/trace-data-source.md",
     "./commands/dev-help.md"
   ],
   "skills": [
     "./skills/code-knowledge/SKILL.md",
-    "./skills/code-review/SKILL.md",
+    "./skills/reviewer/SKILL.md",
     "./skills/development-help/SKILL.md",
     "./skills/test-driven-development/SKILL.md"
   ]
@@ -209,7 +209,7 @@ contract-dev-plugin/
 ├── .claude-plugin/
 │   └── plugin.json                          # 插件配置文件
 ├── commands/
-│   ├── code-review.md                       # 代码审查命令
+│   ├── reviewer.md                       # 代码审查命令
 │   ├── trace-data-source.md                 # 追踪数据来源命令
 │   └── dev-help.md                          # 开发规范指导命令
 ├── skills/
@@ -217,7 +217,7 @@ contract-dev-plugin/
 │   │   ├── SKILL.md                         # 知识库入口
 │   │   └── references/
 │   │       └── contract-pdf-build-service.md
-│   ├── code-review/                         # 代码审查规范
+│   ├── reviewer/                         # 代码审查规范
 │   │   └── SKILL.md
 │   ├── development-help/                    # 开发规范指导
 │   │   ├── SKILL.md
@@ -236,7 +236,7 @@ contract-dev-plugin/
 **场景**: 审查签约服务代码
 
 ```bash
-/code-review src/service/ContractService.java
+/reviewer src/service/ContractService.java
 ```
 
 **输出示例**:
@@ -437,7 +437,7 @@ public enum ApprovalStatus {
 
 ### 自定义代码审查规则
 
-可以修改 `skills/code-review/SKILL.md` 来调整代码审查的规则和重点检查项。
+可以修改 `skills/reviewer/SKILL.md` 来调整代码审查的规则和重点检查项。
 
 ### 添加新命令
 
@@ -446,7 +446,7 @@ public enum ApprovalStatus {
 ```json
 {
   "commands": [
-    "./commands/code-review.md",
+    "./commands/reviewer.md",
     "./commands/trace-data-source.md",
     "./commands/dev-help.md",
     "./commands/your-new-command.md"
@@ -493,7 +493,7 @@ public enum ApprovalStatus {
 
 ### v1.0.0 (2026-01-17)
 - 🎉 初始版本发布
-- ✨ 支持 `/code-review` 命令
+- ✨ 支持 `/reviewer` 命令
 - ✨ 包含签约项目代码审查规范
 
 ## 后续规划

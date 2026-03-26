@@ -52,7 +52,7 @@ skills/<skill-name>/
 | Spring AI Alibaba | Agent、Graph、StateGraph、编排、checkpoint | `skills/spring-ai-alibaba-developer` |
 | TDD/测试规范 | 单元测试、Mock、集成测试、测试驱动 | `skills/test-driven-development` |
 | 项目结构 | DDD、包结构、分层、模块划分 | `skills/project-structure` |
-| 代码审查 | 空指针、Optional、代码规范、CR | `skills/code-review` |
+| 代码审查 | 空指针、Optional、代码规范、CR | `skills/reviewer` |
 
 **判断规则**：
 1. 优先匹配关键词，命中则写入对应 skill

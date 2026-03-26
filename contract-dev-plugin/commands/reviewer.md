@@ -1,5 +1,5 @@
 ---
-description: 自动对当前分支修改的代码进行 CR 检查，使用 code-review Skill。
+description: 自动对当前分支修改的代码进行 CR 检查，使用 reviewer Skill。
 allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git branch:*), Bash(git merge-base:*), Bash(git log:*), Bash(ls:*), Read, Grep, Glob, Agent
 ---
 
@@ -19,7 +19,7 @@ allowed-tools: Bash(git status:*), Bash(git diff:*), Bash(git branch:*), Bash(gi
 
 ### 阶段一：代码审查（主线程执行）
 
-使用 **code-review** Skill 审查以上两段 diff 的合并内容（分支全量改动 + 未提交改动）。
+使用 **reviewer** Skill 审查以上两段 diff 的合并内容（分支全量改动 + 未提交改动）。
 
 输出格式：
 1. 风险改动的简短摘要
