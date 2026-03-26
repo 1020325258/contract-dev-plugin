@@ -60,6 +60,8 @@ Multi-Agent 编排框架，提供丰富的 Agent 编排模式。
 | [core-design.md](references/agent-framework/core-design.md) | 核心设计分析 |
 | [system-design.md](references/agent-framework/system-design.md) | 系统设计 |
 | [development-guide.md](references/agent-framework/development-guide.md) | 开发指南 |
+| [skill.md](references/agent-framework/skill.md) | **Skill 能力** - Agent 技能扩展机制 |
+| [tool-calling.md](references/agent-framework/tool-calling.md) | **Tool Calling** - 工具调用实现机制 |
 | [api-reference.md](references/agent-framework/api-reference.md) | API 参考 |
 | [best-practices.md](references/agent-framework/best-practices.md) | 最佳实践 |
 | [troubleshooting.md](references/agent-framework/troubleshooting.md) | 故障排查 |
@@ -241,6 +243,7 @@ references/
 │   ├── core-design.md                # 核心设计
 │   ├── system-design.md              # 系统设计
 │   ├── development-guide.md          # 开发指南
+│   ├── skill.md                      # Skill 能力
 │   ├── api-reference.md              # API 参考
 │   ├── best-practices.md             # 最佳实践
 │   └── troubleshooting.md            # 故障排查

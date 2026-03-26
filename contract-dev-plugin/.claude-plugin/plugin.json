@@ -1,7 +1,7 @@
 {
   "name": "contract-dev-plugin",
   "description": "签约系统代码开发辅助插件",
-  "version": "1.5.6",
+  "version": "1.8.9",
   "author": {
     "name": "11来了"
   },
@@ -11,13 +11,15 @@
     "./commands/code-review.md",
     "./commands/trace-data-source.md",
     "./commands/create-code-knowledge-skill.md",
-    "./commands/fetch-updates.md"
+    "./commands/fetch-updates.md",
+    "./commands/ralph-wiggum.md"
   ],
   "skills": [
     "./skills/code-review",
     "./skills/code-developer",
-    "./skills/test-driven-development",
     "./skills/project-structure",
-    "./skills/content-fetcher"
+    "./skills/content-fetcher",
+    "./skills/spring-ai-alibaba-developer",
+    "./skills/ralph-wiggum"
   ]
 }

@@ -25,3 +25,48 @@ Kafka payload 中，变更单号字段为 `projectChangeNo`（非 `changeOrderNo
 - 协同/团装报价单：解绑报价单，绑定 S 单（`convertCooperBillToSubOrder`）
 - 正签基础报价单：仅绑定 S 单，保留基础报价单关联（`convertStandardBillToSubOrder`）
 - 变更单：仅绑定 S 单，保留变更单关联（`convertChangeToSubOrder`）
+
+## 关键注意事项
+
+### 关联关系中 S 单的三类来源
+
+`contract_quotation_relation` 表中，`bind_type=3`（SUB_ORDER）的记录来源有三类：
+
+| 来源 | 换绑行为 | 换绑后原单据是否保留 |
+|-----|---------|----------------|
+| 基础报价单（bind_type=1） | 绑定 S 单，**保留**基础报价单关联 | ✅ 保留 |
+| 协同报价单（bind_type=1） | 绑定 S 单，**解绑**协同报价单关联 | ❌ 移除 |
+| 变更单（bind_type=2） | 绑定 S 单，**保留**变更单关联 | ✅ 保留 |
+
+> **注意**：协同报价单与基础报价单的 `bind_type` 相同，均为 `1`（BILL_CODE），区分二者需通过查询报价单系统获取报价单类型（`GeneralBillTypeEnum`）。
+
+**检查绑定关系时的识别方式**：
+
+对于合同下 `bind_type=3` 的 S 单，可通过以下方式判断其来源：
+- 若能在 `bind_type=1` 记录中找到对应的基础报价单，则为**基础报价单 S 单**
+- 若能在 `bind_type=2` 记录中找到对应的变更单，则为**变更单 S 单**
+- 以上均未命中的 S 单，则为**协同报价单换绑留下的 S 单**，属正常业务现象，不应视为缺失或异常
+
+### `SubOrderBaseInfoDTO` 的公司主体字段是 `getMdmCode()`
+
+查询 S 单时，要过滤"主体与合同一致"的 S 单，使用的是 `SubOrderBaseInfoDTO::getMdmCode()`，**不是 `getCompanyCode()`**。
+
+```java
+subOrderFeignService.queryValidBaseInfoByHomeOrderNo(projectOrderId, billCode, null)
+    .stream()
+    .filter(dto -> contract.getCompanyCode().equals(dto.getMdmCode()))  // ✅
+    .map(SubOrderBaseInfoDTO::getOrderNo)
+    ...
+```
+
+### `ContractQuotationRelationService#getByContractCode` 默认只返回 BILL_CODE 类型
+
+```java
+// 默认 bindType = BILL_CODE(1)，只返回报价单关联
+getByContractCode(contractCode, status)
+
+// 传 null 才能获取所有 bindType（报价单、变更单、子单）
+getByContractCode(contractCode, status, null)
+```
+
+需要查询全部类型时**必须显式传 `null`**，否则会漏掉变更单和子单的关联关系。

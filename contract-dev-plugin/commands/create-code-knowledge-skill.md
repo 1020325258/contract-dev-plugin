@@ -1,42 +1,44 @@
 ---
-description: 将开发经验持久化为 skill 文档，采用分层索引结构，支持渐进式披露。
+description: 将开发经验持久化为 skill 文档，采用三层知识架构，让 agent 更容易理解和发现知识。
 argument-hint: "[指定要写入的内容]"
 allowed-tools: Read, Write, Edit, Grep, Glob
 ---
 
 ## 职责
-按照**分层知识架构**，将开发经验写入对应位置，确保：
+按照**三层知识架构**，将开发经验写入对应位置，确保：
 1. 顶层 `SKILL.md` 仅作为**导航索引**，不嵌入完整内容
-2. 具体知识按主题分目录存放在 `references/` 下
-3. 通过渐进式披露避免 agent 被海量上下文淹没
+2. 具体知识按层级分目录存放在 `references/` 下
+3. 三层结构帮助 agent 快速判断知识的重要性和用途
 
 ## 插件源码目录
 `/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/`
 
 ---
 
-## 知识分层架构
+## 三层知识架构
 
 ```
 skills/<skill-name>/
-├── SKILL.md                    # 顶层索引（仅导航，不嵌入内容）
+├── SKILL.md                      # 顶层索引（仅导航，不嵌入内容）
 └── references/
-    ├── _overview.md            # 知识地图概览（可选）
-    ├── domain/                 # 业务领域知识
-    │   ├── quotation.md        # 报价单相关
-    │   ├── contract.md         # 合同相关
-    │   └── suborder.md         # S单/子订单相关
-    ├── technical/              # 技术实现规范
-    │   ├── rpc.md              # RPC调用规范
-    │   ├── s3-upload.md        # 文件上传规范
-    │   └── pdf-generation.md   # PDF生成规范
-    ├── workflow/               # 开发工作流经验
-    │   ├── testing.md          # 测试相关经验
-    │   └── troubleshooting.md  # 问题排查经验
-    └── infrastructure/         # 基础设施配置
-        ├── database.md         # 数据库表结构
-        └── maven.md            # Maven配置问题
+    ├── foundation/               # 基础层：每次开发必须具备的知识
+    │   ├── domain-concepts.md    # 核心领域概念、术语定义
+    │   └── database-schema.md   # 数据库表结构 DDL
+    ├── domain/                   # 业务领域层：特定功能开发时需要的知识
+    │   ├── contract-flow.md      # 合同流程规则
+    │   └── apollo-switches.md   # Apollo 开关配置
+    └── experience/               # 实践经验层：踩坑记录、反直觉的配置陷阱
+        ├── kafka-pitfalls.md     # Kafka 配置导致服务无法启动
+        └── bpm-approval.md      # BPM 审批加签配置
 ```
+
+### 各层定义
+
+| 层级 | 目录 | 内容定性 | 判断标准 |
+|------|------|---------|---------|
+| **基础层** | `references/foundation/` | DDL、核心领域概念、基础配置 | 缺少这些知识，开发会产生根本性误解 |
+| **业务领域层** | `references/domain/` | Apollo 开关、业务流程规则、领域逻辑 | 特定功能开发才需要，不是每次都用 |
+| **实践经验层** | `references/experience/` | 踩坑记录、反直觉配置、环境问题 | 仅靠读代码无法发现，需要亲历才知道 |
 
 ---
 
@@ -57,16 +59,24 @@ skills/<skill-name>/
 2. 多个关键词命中时，选择匹配度最高的
 3. 无匹配时默认写入 `skills/code-developer`
 
-### 步骤 1：确定知识分类与目标目录
+### 步骤 1：确定知识层级与目标目录
 
-根据内容特征，选择 `references/` 下的子目录：
+根据内容特征，选择对应层级：
 
-| 分类 | 判断依据 | 目标目录 |
-|-----|---------|---------|
-| **domain** | 业务流程、领域概念、业务规则 | `references/domain/` |
-| **technical** | 技术实现、组件使用、API调用 | `references/technical/` |
-| **workflow** | 开发流程、问题排查、最佳实践 | `references/workflow/` |
-| **infrastructure** | 数据库、配置、环境相关 | `references/infrastructure/` |
+| 内容特征 | 层级 | 目标目录 |
+|---------|------|---------|
+| 数据库 DDL、表结构、字段含义 | 基础层 | `references/foundation/` |
+| 核心领域概念、必知术语定义 | 基础层 | `references/foundation/` |
+| Apollo 开关配置、Feature Flag | 业务领域层 | `references/domain/` |
+| 业务流程规则、领域逻辑 | 业务领域层 | `references/domain/` |
+| Kafka/MQ 配置陷阱 | 实践经验层 | `references/experience/` |
+| BPM 审批流程配置 | 实践经验层 | `references/experience/` |
+| 环境问题、启动失败排查 | 实践经验层 | `references/experience/` |
+| Maven/测试工具问题 | 实践经验层 | `references/experience/` |
+
+**边界判断**：
+- 有业务规则但同时是基础概念 → 优先归入基础层
+- 技术实现规范（RPC、分布式锁）→ 判断是否每次开发都需要：是 → 基础层；否 → 业务领域层
 
 ### 步骤 2：检索是否已有相关内容
 
@@ -88,22 +98,28 @@ skills/<skill-name>/
 - 文件命名规则：`<主题关键词>.md`（小写，连字符分隔）
 
 **4.2 更新 SKILL.md 索引**
-在 `SKILL.md` 对应分类下添加导航条目：
+在 `SKILL.md` 对应层级分组下添加导航条目：
 
 ```markdown
-### [分类名称]
-- [主题标题](./references/<子目录>/<文件名>.md) - 一句话描述
+### [基础层] 必读
+- [主题标题](./references/foundation/<文件名>.md) - 一句话描述
+
+### [业务领域层] 按需查阅
+- [主题标题](./references/domain/<文件名>.md) - 一句话描述
+
+### [实践经验层] 遇到问题时查阅
+- [主题标题](./references/experience/<文件名>.md) - 一句话描述
 ```
 
 **索引条目要求**：
 - 标题清晰，能准确反映内容主题
 - 描述简洁，一句话说明"何时需要查阅此文档"
-- 按重要性/使用频率排序
+- 基础层条目排在最前，实践经验层排在最后
 
 ### 步骤 5：同步更新 plugin.json 版本
 
 - 路径：`.claude-plugin/plugin.json`
-- 对 `version` 字段做 patch 版本升级（如 `1.5.0` → `1.5.1`）
+- 对 `version` 字段做 patch 版本升级（如 `1.8.5` → `1.8.6`）
 
 ---
 
@@ -117,11 +133,11 @@ skills/<skill-name>/
 ## 概述
 <!-- 一句话说明本文档解决的问题 -->
 
-## 业务背景 / 技术背景
+## 背景
 <!-- 必要的上下文信息 -->
 
-## 核心流程 / 使用方式
-<!-- 具体实现步骤 -->
+## 核心内容
+<!-- 具体内容：DDL / 配置项 / 业务规则 / 踩坑过程 -->
 
 ## 注意事项
 <!-- 易错点、边界条件 -->
@@ -133,7 +149,7 @@ skills/<skill-name>/
 ### 索引条目模板（SKILL.md 中）
 
 ```markdown
-- [标题](./references/<目录>/<文件>.md) - 简要描述
+- [标题](./references/<层级目录>/<文件>.md) - 简要描述
 ```
 
 ---
@@ -162,7 +178,7 @@ skills/<skill-name>/
 
 ### 准确性原则
 
-- `业务背景` 没有十足把握不要修改
+- `背景` 没有十足把握不要修改
 - 强制阅读相关领域知识文档，保证术语对齐
 - 解释枚举含义时，务必读取枚举类源码，不能凭命名推测
 
@@ -170,55 +186,77 @@ skills/<skill-name>/
 
 ## 示例
 
-### 知识文件示例（references/domain/quotation-split.md）
+### 实践经验层文件示例（references/experience/bpm-approval.md）
 
 ```markdown
-# 基础报价单拆分为协同报价单
+# BPM 审批加签配置
 
 ## 概述
-基础报价单拆分后，销售合同需从绑定基础报价单改为绑定协同报价单（换绑）。
+BPM 流程中加签功能需要额外配置，否则审批节点无法正常展示加签入口。
 
-## 业务背景
-基础报价单内包含定软电品，发起正签时销售合同绑定基础报价单号；
-正式套餐合同签署后，基础报价单拆分为多个协同报价单，
-需将销售合同与拆分后的协同报价单关联。
+## 背景
+项目使用内部 BPM 系统处理合同审批流程，加签（在审批过程中临时增加审批人）
+需要在流程定义中显式开启，默认不可用。
 
-## 核心流程
-
-### 1. 监听拆分事件
-- 事件类型：`BUDGET_BILL_SPLIT`
-- 监听器：`BudgetBillSplitHandler`
-- 参数：`originalBillCode`、`billCodeList`、`projectOrderId`
-
-### 2. 获取个性化报价数据
-```java
-homeOrderDataConversionService.contractPersonalData(projectOrderId, billCodeList, null);
+## 核心内容
+在流程定义 XML 中，目标审批节点需添加：
+```xml
+<extensionElements>
+  <activiti:taskListener event="create" class="...AddSignListener"/>
+</extensionElements>
 ```
 
-### 3. 换绑合同与报价单关系
-- 绑定：`QuotationRelationCommonService#bindBillCodeRelationAfter`
-- 解绑：`QuotationRelationCommonService#cancelRelationByBillCodeAndContractCode`
+同时 Apollo 中需配置：`bpm.add-sign.enabled=true`
 
 ## 注意事项
-- 换绑目的：防止同一协同报价单重复发起多个销售合同
+- 旧版流程定义升级时，该配置不会自动继承，需手动补充
+- 测试环境和生产环境的 Apollo 配置独立，上线前需同步
+```
+
+### 业务领域层文件示例（references/domain/apollo-switches.md）
+
+```markdown
+# Apollo 开关配置
+
+## 概述
+签约系统中影响核心流程的 Apollo 开关汇总。
+
+## 开关列表
+
+| 开关 Key | 默认值 | 作用 |
+|---------|--------|------|
+| `contract.sign.auto-confirm` | false | 是否自动确认签约 |
+| `contract.pdf.async-generate` | true | PDF 是否异步生成 |
 ```
 
 ### 索引条目示例（SKILL.md 中）
 
 ```markdown
-### 业务领域
-- [报价单拆分换绑](./references/domain/quotation-split.md) - 基础报价单拆分后销售合同的换绑流程
+### [基础层] 必读
+- [核心领域概念](./references/foundation/domain-concepts.md) - 报价单、合同、S单等核心术语定义
+
+### [业务领域层] 按需查阅
+- [Apollo 开关配置](./references/domain/apollo-switches.md) - 影响签约流程的 Apollo 配置项
+
+### [实践经验层] 遇到问题时查阅
+- [BPM 审批加签配置](./references/experience/bpm-approval.md) - 加签功能未生效的排查与配置
 ```
 
 ---
 
 ## 迁移指南
 
-对于现有 skill 目录，执行以下迁移：
+对于使用旧版四目录结构（domain/technical/workflow/infrastructure）的 skill，执行以下迁移：
 
-1. **识别 SKILL.md 中嵌入的完整内容**
-2. **抽取为独立的 references 文件**
-3. **按分类放入对应子目录**
-4. **在 SKILL.md 中替换为索引链接**
+| 旧目录 | 内容特征 | 迁移到 |
+|--------|---------|--------|
+| `infrastructure/` | DDL、数据库表结构 | `foundation/` |
+| `domain/` 中的核心概念文件 | 基础领域术语、必知业务模型 | `foundation/` |
+| `domain/` 中的流程规则文件 | 具体业务流程、Apollo配置 | `domain/` |
+| `technical/` | 技术规范（RPC/锁/上传等） | 按使用频率：高频 → `foundation/`，低频 → `domain/` |
+| `workflow/` | 踩坑、排查问题、测试工具经验 | `experience/` |
 
-迁移后，SKILL.md 应呈现清晰的**目录结构**，而非知识全文。
+迁移步骤：
+1. 在目标层级目录下新建文件（或直接移动文件）
+2. 更新 SKILL.md 中的索引链接路径
+3. 删除旧目录下的空目录
