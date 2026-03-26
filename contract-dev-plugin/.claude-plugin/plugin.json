@@ -1,21 +1,20 @@
 {
   "name": "contract-dev-plugin",
   "description": "签约系统代码开发辅助插件",
-  "version": "1.8.9",
+  "version": "1.9.1",
   "author": {
     "name": "11来了"
   },
   "commands": [
     "./commands/code-developer.md",
-    "./commands/code-reader.md",
-    "./commands/code-review.md",
+    "./commands/reviewer.md",
     "./commands/trace-data-source.md",
     "./commands/create-code-knowledge-skill.md",
     "./commands/fetch-updates.md",
     "./commands/ralph-wiggum.md"
   ],
   "skills": [
-    "./skills/code-review",
+    "./skills/reviewer",
     "./skills/code-developer",
     "./skills/project-structure",
     "./skills/content-fetcher",

@@ -1,8 +1,18 @@
 ---
-description: 签约项目代码审查规范。当审查包含 contractReq.getPromiseInfo()、Optional 使用、空指针风险等签约业务相关的 Java 代码时，优先使用此规范进行专项检查
+description: 签约项目代码审查规范 + 代码与文档一致性审查。当审查包含 contractReq.getPromiseInfo()、Optional 使用、空指针风险等签约业务相关的 Java 代码时，优先使用此规范进行专项检查；同时支持审查代码与 OpenSpec 文档之间的一致性。
 ---
 
 # 签约项目代码审查规范
+
+## 审查范围
+
+### 1. 代码审查
+- 签约业务代码专项检查（空指针防护、Optional 使用规范）
+- Java 代码质量检查
+
+### 2. 代码与文档一致性审查
+- OpenSpec 文档与代码一致性检查
+- 检查工具/方法参数、返回结构、业务规则是否与代码匹配
 
 ## 参考文档
 
