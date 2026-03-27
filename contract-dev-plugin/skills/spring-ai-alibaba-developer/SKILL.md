@@ -156,6 +156,7 @@ Multi-Agent 编排框架，提供丰富的 Agent 编排模式。
 | [deployment-guide.md](references/studio-admin/deployment-guide.md) | 部署指南 |
 | [best-practices.md](references/studio-admin/best-practices.md) | 最佳实践 |
 | [troubleshooting.md](references/studio-admin/troubleshooting.md) | 故障排查 |
+| [observability-guide.md](references/studio-admin/observability-guide.md) | **Agent 观测能力增强** - 观测方案对比与实施路径 |
 
 **核心类路径**:
 - `com.alibaba.cloud.ai.agent.studio.*` - Studio 后端

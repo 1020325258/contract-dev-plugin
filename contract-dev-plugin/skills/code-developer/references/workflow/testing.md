@@ -148,6 +148,100 @@ public class XxxTest {  // 不需要 extends BaseTest
 
 ---
 
+## 集成测试：继承 BaseTest
+
+### 何时使用
+需要执行真实数据库操作时，必须继承 `BaseTest`，使用 Spring Boot Test 容器。
+
+### BaseTest 位置
+```
+utopia-nrs-sales-project-start/src/test/java/com/ke/utopia/nrs/salesproject/BaseTest.java
+```
+
+### 写法示例
+
+```java
+public class XxxServiceTest extends BaseTest {
+
+    @Resource
+    private XxxService xxxService;  // 使用 @Resource 注入
+
+    @Resource
+    private XxxMapper xxxMapper;
+
+    @Test
+    public void testSave() {
+        // 可以执行真实的数据库操作
+        XxxEntity entity = new XxxEntity();
+        entity.setName("测试");
+        xxxMapper.insert(entity);
+        // 验证插入结果
+    }
+}
+```
+
+### 注意事项
+- **集成测试必须继承 BaseTest**，否则无法执行真实的 DB 操作
+- 测试类放在 `utopia-nrs-sales-project-start/src/test/java` 目录下（不是 service 模块）
+- 使用 `@Resource` 而非 `@Autowired` 注入
+- 执行 `mvn test -pl utopia-nrs-sales-project-start` 运行集成测试
+
+---
+
+## 代码修改原则：同步修改调用方
+
+### 核心原则
+修改方法签名或逻辑时，**必须**找到所有调用方并同步修改，避免编译失败或运行时错误。
+
+### 操作步骤
+
+1. **使用 Grep 搜索调用点**：搜索方法名或变量名
+   ```
+   Grep 工具搜索 "recordBindChangeLog" 或具体参数
+   ```
+
+2. **分析每个调用点**：
+   - 检查调用方的传参方式是否需要调整
+   - 检查是否需要新增/删除调用
+
+3. **同步修改所有调用方**：
+   - 更新调用参数
+   - 更新测试代码
+   - 验证编译通过
+
+### 示例：方法合并
+
+**场景**：将两个重载方法合并为一个
+
+```java
+// 原始
+void recordBindChangeLog(String a, String b, String c, String d);
+void recordBindChangeLog(String a, String b, String c, List<String> d);
+
+// 修改后：合并为一个
+void recordBindChangeLog(String a, String b, String c, List<String> d);
+```
+
+**调用方修改**：
+
+```java
+// 原调用方1：使用 String
+recordBindChangeLog(x, y, z, "singleValue");
+// 改为
+recordBindChangeLog(x, y, z, Collections.singletonList("singleValue"));
+
+// 原调用方2：已使用 List
+recordBindChangeLog(x, y, z, Arrays.asList("a", "b"));
+// 无需修改
+```
+
+### 注意事项
+- 搜索时用全路径类名，避免搜到同名方法
+- 修改后立即编译验证：`mvn compile -pl xxx -am`
+- 运行集成测试确保无遗漏
+
+---
+
 ## 测试优先级
 
 | 优先级 | 测试类型 |
