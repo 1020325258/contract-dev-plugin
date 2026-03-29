@@ -118,7 +118,7 @@ skills/<skill-name>/
 
 ### 步骤 5：同步更新 plugin.json 版本
 
-- 路径：`.claude-plugin/plugin.json`
+- 路径：`/Users/zqy/work/AI-Project/claude-code-plugins/sales-project-plugins/contract-dev-plugin/.claude-plugin/plugin.json`
 - 对 `version` 字段做 patch 版本升级（如 `1.8.5` → `1.8.6`）
 
 ---

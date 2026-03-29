@@ -93,6 +93,10 @@ Multi-Agent 编排框架，提供丰富的 Agent 编排模式。
 | [api-reference.md](references/graph-core/api-reference.md) | API 参考 |
 | [best-practices.md](references/graph-core/best-practices.md) | 最佳实践 |
 | [troubleshooting.md](references/graph-core/troubleshooting.md) | 故障排查 |
+| [dispatcher-routing-pattern.md](references/graph-core/dispatcher-routing-pattern.md) | **Dispatcher 路由模式** - 节点写控制键、EdgeAction 读键决策的应用约定与并行扇出模式 |
+| [streaming-output-pattern.md](references/graph-core/streaming-output-pattern.md) | **SSE 流式输出集成** - Graph + Spring WebFlux SSE、双消息类型设计、visible 标志与 FluxConverter |
+| [memory-architecture.md](references/graph-core/memory-architecture.md) | **记忆架构设计** - 三层记忆体系、session_id vs thread_id 双轨、MemorySaver 职责边界与 Tradeoff |
+| [multi-agent-coordination-pattern.md](references/graph-core/multi-agent-coordination-pattern.md) | **多 Agent 协作编排** - ChatClient Agent 定义、NodeAction 封装、StateGraph 编排骨架、四层协作架构 |
 
 **核心类路径**:
 - `com.alibaba.cloud.ai.graph.StateGraph` - 状态图定义
@@ -154,6 +158,7 @@ Multi-Agent 编排框架，提供丰富的 Agent 编排模式。
 | [system-design.md](references/studio-admin/system-design.md) | 系统设计 |
 | [development-guide.md](references/studio-admin/development-guide.md) | 开发指南 |
 | [deployment-guide.md](references/studio-admin/deployment-guide.md) | 部署指南 |
+| [standalone-usage.md](references/studio-admin/standalone-usage.md) | **前端独立使用** - 不引入 studio jar 包使用前端页面 |
 | [best-practices.md](references/studio-admin/best-practices.md) | 最佳实践 |
 | [troubleshooting.md](references/studio-admin/troubleshooting.md) | 故障排查 |
 | [observability-guide.md](references/studio-admin/observability-guide.md) | **Agent 观测能力增强** - 观测方案对比与实施路径 |
