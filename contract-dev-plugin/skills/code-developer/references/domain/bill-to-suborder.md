@@ -77,10 +77,31 @@ getByContractCode(contractCode, status, null)
 
 **功能**：校验订单下销售合同的绑定关系是否正确
 
-**校验逻辑**：
-- 仅校验基础报价单和变更单的换绑是否正确
-- 正确标准：基础报价单对应的 S 单（主体与合同一致）**必须全部**在当前合同上绑定，才认为换绑正确
-- 漏换绑 = 错误
+**校验维度**：
+- 基础报价单 → S 单换绑校验（需先判断报价单类型，仅校验 `BUDGET_STANDARD` 类型）
+- 变更单 → S 单换绑校验
+- 协同报价单 → S 单换绑校验（需过滤无效状态：IN_ADJUST、DELETED、CANCELED）
+
+**有效单据的获取逻辑**：
+- **有效基础报价单**：从关联表拿到 status=1 的，且类型为基础报价单
+- **有效协同报价单**：从关联表拿到 status=1 或 2 的，且状态有效（非 IN_ADJUST、DELETED、CANCELED），且类型为协同报价单（BUDGET_COOPER 或 BUDGET_GROUP）
+- **有效变更单**：从关联表拿到 status=1 的，bind_type 为变更单类型
+
+**漏换绑判断逻辑**：
+- 先通过 `queryValidBaseInfoByHomeOrderNo` 获取该报价单对应的所有 S 单（主体与合同一致）
+- 再判断这些 S 单是否都在当前合同上已绑定
+- `missing = expectedSubOrders - boundSubOrderNos`
+- **注意**：协同报价单的漏换绑判断逻辑与基础报价单/变更单一致，即如果该报价单对应的S单全部在当前合同上绑定了，那么就没有漏的
+
+**协同报价单校验特殊性**：
+- 查询关联关系时需要**分两次查询**：`status=1`（已关联）和 `status=2`（已取消关联）
+- 因为协同报价单换绑后会从 status=1 变为 status=2，仅查 status=1 会漏掉已换绑的数据
+- 已换绑判断：只要该报价单对应的 S 单**有一个**在当前合同上绑定，即认为已换绑
+
+**封装方法**：
+- `getBillCheckContext(contractCode)`：基于合同号获取需要校验换绑的单据信息，返回包含 boundSubOrderNos、billMap、validStandardBillCodes、validCooperBillCodes、validChangeOrderIds 的上下文对象
+- `checkAndBuildResult(billCode, billTypeKey, expectedSubOrders, boundSubOrderNos)`：统一构建校验结果
+- `isBillStatusValid(billStatus)`：判断报价单状态是否有效（非 IN_ADJUST、DELETED、CANCELED）
 
 **返回格式**：
 ```json
@@ -88,7 +109,7 @@ getByContractCode(contractCode, status, null)
   "C001": {
     "基础报价单校验": [
       {
-        "报价单号": "B001",
+        "基础报价单号": "B001",
         "应该换绑S单": ["S001", "S002", "S003"],
         "已换绑S单": ["S001", "S002"],
         "漏换绑S单": ["S003"],
@@ -96,12 +117,18 @@ getByContractCode(contractCode, status, null)
       }
     ],
     "变更单校验": [...],
+    "协同报价单校验": [
+      {
+        "协同报价单号": "C001",
+        "报价单状态": 1,
+        "是否已换绑S单": false,
+        "应该换绑S单": [],
+        "已换绑S单": [],
+        "漏换绑S单": [],
+        "是否正确": true
+      }
+    ],
     "校验结果": "错误"
   }
 }
 ```
-
-**校验维度**：
-- 基础报价单 → S 单换绑
-- 变更单 → S 单换绑
-- 主体过滤：只统计 `mdmCode` 与合同 `companyCode` 一致的 S 单
